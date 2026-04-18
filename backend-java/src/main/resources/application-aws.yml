@@ -1,0 +1,25 @@
+spring:
+  jpa:
+    show-sql: false
+  datasource:
+    hikari:
+      maximum-pool-size: ${DB_POOL_MAX:10}
+      minimum-idle: ${DB_POOL_MIN:2}
+      connection-timeout: 30000
+
+server:
+  forward-headers-strategy: framework
+
+management:
+  endpoint:
+    health:
+      show-details: never
+
+app:
+  ml:
+    predict-url: ${ML_PREDICT_URL}
+  storage:
+    s3-bucket: ${S3_BUCKET}
+
+aws:
+  region: ${AWS_REGION:us-east-1}

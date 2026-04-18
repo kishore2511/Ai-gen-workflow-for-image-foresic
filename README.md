@@ -30,12 +30,18 @@ mvn spring-boot:run
 
 Open: `http://localhost:8080`
 
+### 3) One-command local option
+```bash
+make up
+```
+
 ## API endpoints
 - `POST /api/auth/register`
 - `POST /api/auth/login`
 - `POST /api/analysis/upload` (Bearer token required)
 - `GET /api/analysis/history` (Bearer token required)
 - ML service: `GET /health`, `POST /predict`
+- Backend health: `GET /actuator/health`
 
 ## Local-to-AWS migration
 1. Create AWS account and IAM user/role with least-privilege access.
@@ -52,3 +58,9 @@ Open: `http://localhost:8080`
 
 ## Important model note
 `ml-service/model.py` contains a deterministic placeholder heuristic model so the full pipeline works immediately. Replace it with a trained EfficientNet checkpoint for final accuracy reporting.
+
+## Hardening docs
+- Secrets strategy: `docs/security-secrets.md`
+- IAM policy template: `docs/aws/iam-policy-s3-rds-cloudwatch.json`
+- Bucket policy template: `docs/aws/bucket-policy-template.json`
+- E2E smoke checklist: `docs/e2e.md`

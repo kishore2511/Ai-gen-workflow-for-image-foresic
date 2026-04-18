@@ -1,5 +1,15 @@
 # Architecture Overview
 
+```mermaid
+flowchart LR
+  U[User Browser] --> B[Spring Boot Backend]
+  B --> DB[(MySQL/H2)]
+  B --> S3[(S3 or Local Storage)]
+  B --> ML[FastAPI ML Service]
+  ML --> B
+  B --> U
+```
+
 1. User registers/logs in via Spring Boot web UI.
 2. Passwords are hashed with BCrypt and persisted in SQL DB.
 3. Authenticated user uploads image to `/api/analysis/upload`.
