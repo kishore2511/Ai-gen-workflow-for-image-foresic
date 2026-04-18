@@ -1,4 +1,4 @@
-.PHONY: up up-ml up-backend test test-backend test-ml e2e
+.PHONY: up up-ml up-backend test test-backend test-ml e2e deps-ml
 
 up:
 	docker compose up --build
@@ -14,8 +14,11 @@ test: test-backend test-ml
 test-backend:
 	cd backend-java && mvn test
 
-test-ml:
+deps-ml:
+	cd ml-service && python -m pip install -r requirements.txt
+
+test-ml: deps-ml
 	cd ml-service && python -m pytest -q
 
 e2e:
-	@echo "Run backend + ml-service, then execute API smoke tests (docs/e2e.md)"
+	./scripts/local_e2e.sh

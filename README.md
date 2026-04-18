@@ -35,6 +35,27 @@ Open: `http://localhost:8080`
 make up
 ```
 
+### 4) Environment templates
+```bash
+cp .env.example .env
+cp backend-java/.env.example backend-java/.env
+cp ml-service/.env.example ml-service/.env
+```
+
+## Local quality gates (non-AWS)
+- Run ML tests:
+```bash
+make test-ml
+```
+- Run backend tests:
+```bash
+make test-backend
+```
+- Run local end-to-end smoke test (register/login/upload/history):
+```bash
+make e2e
+```
+
 ## API endpoints
 - `POST /api/auth/register`
 - `POST /api/auth/login`
@@ -64,3 +85,4 @@ make up
 - IAM policy template: `docs/aws/iam-policy-s3-rds-cloudwatch.json`
 - Bucket policy template: `docs/aws/bucket-policy-template.json`
 - E2E smoke checklist: `docs/e2e.md`
+- Automated E2E script: `scripts/local_e2e.sh`
