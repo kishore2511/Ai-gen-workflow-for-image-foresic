@@ -1,5 +1,6 @@
 package com.defense.forensic.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -10,7 +11,7 @@ import software.amazon.awssdk.services.s3.S3Client;
 @Profile("aws")
 public class AwsConfig {
     @Bean
-    public S3Client s3Client() {
-        return S3Client.builder().region(Region.US_EAST_1).build();
+    public S3Client s3Client(@Value("${aws.region:us-east-1}") String awsRegion) {
+        return S3Client.builder().region(Region.of(awsRegion)).build();
     }
 }

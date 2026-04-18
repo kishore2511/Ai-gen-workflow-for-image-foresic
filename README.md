@@ -19,6 +19,9 @@ pip install -r requirements.txt
 uvicorn app:app --reload --port 8000
 ```
 
+Optional: place a trained EfficientNet checkpoint at `ml-service/best_model.pt`.
+If this file is not present, the service automatically falls back to the deterministic heuristic model for local development.
+
 ### 2) Start Spring Boot backend
 ```bash
 cd backend-java
@@ -34,11 +37,27 @@ Open: `http://localhost:8080`
 - `GET /api/analysis/history` (Bearer token required)
 - ML service: `GET /health`, `POST /predict`
 
+## Local validation checklist (before AWS)
+1. Run Python unit tests:
+   ```bash
+   cd ml-service
+   pytest -q
+   ```
+2. Run backend tests:
+   ```bash
+   cd backend-java
+   mvn test
+   ```
+3. Verify manual API flow (register → login → upload → history) with Postman or curl.
+4. Confirm local storage mode writes files under `LOCAL_UPLOAD_DIR` and history is persisted.
+5. After local pass, switch to AWS values (`SPRING_PROFILES_ACTIVE=aws`, `S3_BUCKET`, RDS env vars).
+
 ## Local-to-AWS migration
 1. Create AWS account and IAM user/role with least-privilege access.
 2. Create S3 bucket and set `SPRING_PROFILES_ACTIVE=aws`, `S3_BUCKET=...`.
 3. Create RDS MySQL instance and set `DB_URL`, `DB_USER`, `DB_PASS`, `DB_DRIVER=com.mysql.cj.jdbc.Driver`.
 4. Move secrets from `.env` to AWS Secrets Manager for production.
+5. Set `AWS_REGION` to match your target AWS deployment region.
 
 ## Security notes
 - Passwords are hashed using BCrypt.

@@ -22,3 +22,6 @@ app:
   storage:
     local-dir: ${LOCAL_UPLOAD_DIR:uploads}
     s3-bucket: ${S3_BUCKET:replace-me}
+
+aws:
+  region: ${AWS_REGION:us-east-1}
