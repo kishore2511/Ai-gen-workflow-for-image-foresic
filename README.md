@@ -103,5 +103,6 @@ For the detailed local-only completion plan, use:
 - Secrets strategy: `docs/security-secrets.md`
 - IAM policy template: `docs/aws/iam-policy-s3-rds-cloudwatch.json`
 - Bucket policy template: `docs/aws/bucket-policy-template.json`
+- AWS setup and account creation walkthrough: `docs/aws/setup-and-connect.md`
 - E2E smoke checklist: `docs/e2e.md`
 - Automated E2E script: `scripts/local_e2e.sh`
