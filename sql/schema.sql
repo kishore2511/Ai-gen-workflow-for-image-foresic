@@ -1,0 +1,18 @@
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS analysis_requests (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    storage_key VARCHAR(512) NOT NULL,
+    prediction_label VARCHAR(16) NOT NULL,
+    confidence DOUBLE NOT NULL,
+    image_sha256 VARCHAR(64) NOT NULL,
+    result_sha256 VARCHAR(64) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_analysis_user FOREIGN KEY (user_id) REFERENCES users(id)
+);
