@@ -64,6 +64,25 @@ make e2e
 - ML service: `GET /health`, `POST /predict`
 - Backend health: `GET /actuator/health`
 
+
+## Progress check against your 1-day plan (local-first)
+Given your current constraint (no AWS account/S3/RDS yet), the right target is to make the **local pipeline 100% green** first.
+
+### Local 100% target (no AWS)
+You are considered done locally when this command succeeds end-to-end:
+
+```bash
+make local-100
+```
+
+That command now:
+1. Starts Docker services for backend + ML.
+2. Waits for `/health` and `/actuator/health`.
+3. Runs the full local auth/upload/history smoke flow.
+
+For the detailed local-only completion plan, use:
+- `docs/local-100-checklist.md`
+
 ## Local-to-AWS migration
 1. Create AWS account and IAM user/role with least-privilege access.
 2. Create S3 bucket and set `SPRING_PROFILES_ACTIVE=aws`, `S3_BUCKET=...`.

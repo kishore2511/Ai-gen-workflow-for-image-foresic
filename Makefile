@@ -1,4 +1,4 @@
-.PHONY: up up-ml up-backend test test-backend test-ml e2e deps-ml
+.PHONY: up up-ml up-backend test test-backend test-ml e2e deps-ml local-100
 
 up:
 	docker compose up --build
@@ -22,3 +22,6 @@ test-ml: deps-ml
 
 e2e:
 	./scripts/local_e2e.sh
+
+local-100:
+	./scripts/local_100.sh
