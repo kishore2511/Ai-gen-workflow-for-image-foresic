@@ -37,6 +37,10 @@ public class AnalysisService {
         if (file == null || file.isEmpty()) {
             throw new IllegalStateException("Uploaded file is empty");
         }
+        String contentType = file.getContentType() == null ? "" : file.getContentType();
+        if (!contentType.startsWith("image/")) {
+            throw new IllegalStateException("Only image uploads are supported");
+        }
         try {
             User user = userRepository.findByEmail(email.trim().toLowerCase()).orElseThrow();
             byte[] bytes = file.getBytes();
