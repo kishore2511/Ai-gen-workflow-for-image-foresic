@@ -19,6 +19,9 @@ pip install -r requirements.txt
 uvicorn app:app --reload --port 8000
 ```
 
+Optional: place a trained EfficientNet checkpoint at `ml-service/best_model.pt`.
+If this file is not present, the service automatically falls back to the deterministic heuristic model for local development.
+
 ### 2) Start Spring Boot backend
 ```bash
 cd backend-java
@@ -39,6 +42,7 @@ Open: `http://localhost:8080`
 2. Create S3 bucket and set `SPRING_PROFILES_ACTIVE=aws`, `S3_BUCKET=...`.
 3. Create RDS MySQL instance and set `DB_URL`, `DB_USER`, `DB_PASS`, `DB_DRIVER=com.mysql.cj.jdbc.Driver`.
 4. Move secrets from `.env` to AWS Secrets Manager for production.
+5. Set `AWS_REGION` to match your target AWS deployment region.
 
 ## Security notes
 - Passwords are hashed using BCrypt.
