@@ -10,6 +10,7 @@ import com.defense.forensic.util.Sha256Util;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.client.RestClientException;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,8 +34,11 @@ public class AnalysisService {
 
     @Transactional
     public AnalysisResultDto processUpload(String email, MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            throw new IllegalStateException("Uploaded file is empty");
+        }
         try {
-            User user = userRepository.findByEmail(email).orElseThrow();
+            User user = userRepository.findByEmail(email.trim().toLowerCase()).orElseThrow();
             byte[] bytes = file.getBytes();
             String storageKey = storageService.store(bytes, file.getOriginalFilename());
             PredictionResponse response = mlClient.predict(file);
@@ -54,11 +58,13 @@ public class AnalysisService {
             return toDto(entity);
         } catch (IOException e) {
             throw new IllegalStateException("Cannot read upload", e);
+        } catch (RestClientException e) {
+            throw new IllegalStateException("ML service unavailable", e);
         }
     }
 
     public List<AnalysisResultDto> findHistory(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow();
+        User user = userRepository.findByEmail(email.trim().toLowerCase()).orElseThrow();
         return analysisRequestRepository.findByUserOrderByCreatedAtDesc(user)
                 .stream()
                 .map(this::toDto)
