@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:h2:file:./forensic-db;MODE=MySQL;DATABASE_TO_LOWER=TRUE}
+    username: ${DB_USER:sa}
+    password: ${DB_PASS:}
+    driver-class-name: ${DB_DRIVER:org.h2.Driver}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:change-this-jwt-secret-to-32-plus-bytes-change-this-now}
+    expiration-seconds: 86400
+  ml:
+    predict-url: ${ML_PREDICT_URL:http://localhost:8000/predict}
+  storage:
+    local-dir: ${LOCAL_UPLOAD_DIR:uploads}
+    s3-bucket: ${S3_BUCKET:replace-me}
